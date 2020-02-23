@@ -1,0 +1,27 @@
+
+ .task__done{
+  max-width: 100%;
+  display: flex;
+  padding-left: 3rem;
+  padding-right: 4rem;
+  font-size: 1.8rem;
+  line-height: 2rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  align-items: center;
+  border-radius: 15px;
+  margin: 2rem;
+}
+.task__text {
+  margin-left: 2.5rem;
+}
+.task__delete{
+background: transparent; 
+border: none;
+outline: none; 
+font-size: 2rem;
+
+}
+.task__done{
+background-color: red;
+}  

@@ -1,5 +1,5 @@
 import React from "react";
-import "../../../src/index.css";
+import "./Layout.css";
 import ShowModalBtn from "../pop-up/modalShowBtn";
 import ModalForm from "../pop-up/Modal";
 import TaskList from "../CurrentTasks";

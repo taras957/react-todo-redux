@@ -1,0 +1,7 @@
+.taskList {
+  display: flex;
+  justify-content: space-around;
+}
+.taskList{
+  list-style: none;
+}

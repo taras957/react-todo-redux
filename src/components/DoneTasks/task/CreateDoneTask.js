@@ -2,6 +2,7 @@ import React from 'react';
 import DeleteIcon from "@material-ui/icons/Delete";
 import { removeFromDone  } from "../../../store/actions/layoutActions";
 import { connect } from "react-redux";
+import createDoneTask from './CreateDoneTask.css'
 
 function CreateDoneTask({
   text,

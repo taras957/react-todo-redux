@@ -2,7 +2,7 @@ import React, { useState, useEffect} from "react";
 import moment from "moment";
 import { connect } from "react-redux";
 import { setModal, setTask, isEdit,removeFromList } from "../../store/actions/layoutActions";
-
+import Modal from './Modal.css'
 
 
 function dateValidation(str) {

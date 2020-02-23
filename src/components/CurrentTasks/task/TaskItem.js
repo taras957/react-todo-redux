@@ -3,6 +3,7 @@ import DoneOutlineIcon from "@material-ui/icons/DoneOutline";
 import DeleteIcon from '@material-ui/icons/Delete';
 import { removeFromList, isDone,setModal, isEdit} from "../../../store/actions/layoutActions";
 import { connect } from "react-redux";
+import taskItem from './TaskItem.css'
 
 
 
