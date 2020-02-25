@@ -3,17 +3,16 @@ import {
   SET_TASK,
   REMOVE_FROM_LIST,
   SET_DONE_TASK,
-  REMOVE_FROM_DONE,
-  SORT_BY_NEW_DATE,
-  SORT_BY_OLD_DATE,
-  IS_EDIT
+  SORT_BY_DATE,
+  IS_EDIT,
 } from "../actions/actionTypes";
+
 const initialState = {
   modal: false,
   taskList: [],
-  doneTasks: [],
   editTask: {
-    isEdit: false,
+    editTask: false,
+    editComplete: false,
     taskId: null
   }
 };
@@ -37,39 +36,41 @@ export default function rootReducer(state = initialState, action) {
         taskList: state.taskList.filter(el => el.id !== action.payload)
       };
     case SET_DONE_TASK:
-      const newTask = state.taskList.filter(task => task.id === action.payload);
       return {
         ...state,
-        taskList: state.taskList.filter(task => task.id !== action.payload),
-        doneTasks: state.doneTasks.concat(newTask[0])
+        taskList: state.taskList.map(task =>
+          task.id === action.payload
+            ? {
+                ...task,
+                isDone: !task.isDone
+              }
+            : task
+        )
       };
-    case REMOVE_FROM_DONE:
-      return {
-        ...state,
-        doneTasks: state.doneTasks.filter(el => el.id !== action.payload)
-      };
-    case SORT_BY_NEW_DATE:
-      return {
-        ...state,
-        taskList: [
-          ...state.taskList.sort((a, b) => new Date(a.date) - new Date(b.date))
-        ]
-      };
-    case SORT_BY_OLD_DATE:
-      return {
-        ...state,
-        taskList: [
-          ...state.taskList.sort((a, b) => new Date(b.date) - new Date(a.date))
-        ]
-      };
-    case IS_EDIT:
-      console.log("test");
 
+    case SORT_BY_DATE:
+      let predicate;
+     if (action.payload=== 'old') {
+    predicate =  (a, b) => new Date(a.date) - new Date(b.date);
+     }else {
+       predicate =  (a, b) => new Date(b.date) - new Date(a.date)
+     }
       return {
         ...state,
-        editTask: { editTask: !state.editTask.editTask, taskId: action.payload }
+        taskList: [
+          ...state.taskList.sort(predicate)
+        ]
       };
+
+    case IS_EDIT:
+      return {
+        ...state,
+        editTask: {...state.editTask, editTask: !state.editTask.editTask, taskId: action.payload }
+      };
+
     default:
       return state;
   }
 }
+
+

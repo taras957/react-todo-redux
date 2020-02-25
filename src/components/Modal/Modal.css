@@ -57,7 +57,7 @@
   font-size: 1.6rem;
 }
 
-.circle{
+.circle-close{
   width:40px;
   height:40px;
   background:transparent;
@@ -71,7 +71,7 @@
   cursor: pointer;
 }
 input {outline:none;}
-.circle:after{
+.circle-close:after{
     width:24px;
     height:4px;
     background-color:red;
@@ -84,7 +84,7 @@ input {outline:none;}
      transform:rotate(-45deg);
 
   }
-  .circle:before{
+  .circle-close:before{
     left:50%;
     top:50%;
     margin-left:-12px;

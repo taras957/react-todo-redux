@@ -1,6 +1,9 @@
 import React from 'react'
 import TaskItem from './task'
 import {connect} from 'react-redux'
+import PropTypes from "prop-types";
+
+
 
 
 function TaskList({ taskList }) {
@@ -13,6 +16,7 @@ function TaskList({ taskList }) {
              id={item.id}
              text={item.description}
              date={item.date}
+             isDone ={item.isDone}
            />
          );
        })}
@@ -27,5 +31,9 @@ function TaskList({ taskList }) {
     taskList: state.taskList,
    }
  }
+
+ TaskList.propTypes = {
+   taskList: PropTypes.arrayOf(PropTypes.object)
+ };
 
 export default connect(mapStateToProps)(TaskList);

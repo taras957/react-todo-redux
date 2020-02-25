@@ -1,11 +1,16 @@
 import React from "react";
+import cn from "classnames";
 import DoneOutlineIcon from "@material-ui/icons/DoneOutline";
 import DeleteIcon from '@material-ui/icons/Delete';
-import { removeFromList, isDone,setModal, isEdit} from "../../../store/actions/layoutActions";
+import {
+  removeFromList,
+  setModal,
+  isEdit,
+  setDone
+} from "../../../store/actions/layoutActions";
 import { connect } from "react-redux";
-import taskItem from './TaskItem.css'
-
-
+import  './taskItem.css'
+import PropTypes from "prop-types";
 
 
  function TaskItem({
@@ -13,17 +18,23 @@ import taskItem from './TaskItem.css'
    date,
    id,
    removeFromList,
+   setDone,
    isDone,
    setModal,
    isEdit
  }) {
+
+
+  let taskStatus = cn('task',{'unDone': !isDone, 'done':isDone});
+
+  
    return (
-     <li className="task" id={id}>
+     <li className={taskStatus} id={id}>
        <button
          className={"task__done-toggle"}
          type="checkbox"
          onClick={e => {
-           isDone(e.target.closest(".task").id);
+           setDone(e.target.closest(".task").id);
          }}
        >
          <DoneOutlineIcon />
@@ -51,13 +62,21 @@ import taskItem from './TaskItem.css'
      </li>
    );
  }
- function mapDispatchToProps(dispatch) {
-   return {
-     removeFromList: taskId => dispatch(removeFromList(taskId)),
-     isDone: taskId => dispatch(isDone(taskId)),
-     setModal: () => dispatch(setModal()),
-     isEdit: (taskId) => dispatch( isEdit(taskId))
-   };
+ const mapDispatchToProps= {
+     removeFromList,
+     setDone,
+     setModal,
+     isEdit,
  }
 
+   TaskItem.propTypes = {
+     text: PropTypes.string,
+     date: PropTypes.string,
+     id: PropTypes.string,
+     setDone: PropTypes.func,
+     isDone: PropTypes.bool,
+     setModal: PropTypes.func,
+     isEdit: PropTypes.func,
+     removeFromList: PropTypes.func
+   };
  export default connect(null,mapDispatchToProps)(TaskItem);

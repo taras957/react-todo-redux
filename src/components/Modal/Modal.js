@@ -1,8 +1,11 @@
 import React, { useState, useEffect} from "react";
 import moment from "moment";
 import { connect } from "react-redux";
-import { setModal, setTask, isEdit,removeFromList } from "../../store/actions/layoutActions";
-import Modal from './Modal.css'
+import { setModal, setTask, isEdit,removeFromList} from "../../store/actions/layoutActions";
+import  './Modal.css'
+import { Modal } from "@material-ui/core";
+import PropTypes from "prop-types";
+
 
 
 function dateValidation(str) {
@@ -25,30 +28,34 @@ function ModalForm({
   const [date, setDate] = useState("");
   const [errorName, setError] = useState(false);
   const [dateValid, SetDateValid] = useState(false);
+
+
   function handleSubmit(e) {
     const toDoItem = {
       description: inputValue,
       id: (Math.random() * 9999).toFixed(5),
       date: date,
-      isDone: false
+      isDone: false,
     };
-
-    setCurrentTask(toDoItem);
-
+  
+      setCurrentTask(toDoItem);
     setInputValue("");
     setDate("");
   }
 
   useEffect(() => {
     if (editTask.editTask) {
+
       const task = taskList.filter(task => task.id === editTask.taskId);
       setInputValue(task[0].description);
       setDate(task[0].date);
-      isEdit(null);
-      removeFromList(task[0].id);
 
     }
   }, [editTask.editTask, editTask.taskId, taskList,isEdit,removeFromList]);
+
+
+
+
 
   return (
     <div
@@ -61,7 +68,7 @@ function ModalForm({
       }}
     >
       <div className="pop-up">
-        <button className="circle" onClick={() => setModal()}></button>
+        <button className="circle-close" onClick={() => setModal()}></button>
         <form
           onSubmit={e => {
             e.preventDefault();
@@ -106,6 +113,10 @@ function ModalForm({
 
                 return;
               } else {
+                if(editTask.editTask){
+                  removeFromList(editTask.taskId);
+                  isEdit(null)
+                }
                 handleSubmit(e);
               }
             }}
@@ -125,13 +136,23 @@ function mapStateToProps(state) {
     editTask: state.editTask
   };
 }
-function mapDispatchToProps(dispatch) {
-  return {
-    setModal: () => dispatch(setModal()),
-    setTask: currenTask => dispatch(setTask(currenTask)),
-    removeFromList: taskId => dispatch(removeFromList(taskId)),
-    isEdit: taskId => dispatch(isEdit(taskId))
-  };
-}
 
+
+
+const mapDispatchToProps = {
+  setModal,
+  setTask,
+  removeFromList,
+  isEdit
+};
+
+
+Modal.propTypes = {
+  setModal: PropTypes.func,
+  setTask: PropTypes.func,
+  editTask: PropTypes.func,
+  taskList: PropTypes.arrayOf(PropTypes.object),
+  isEdit: PropTypes.func,
+  removeFromList: PropTypes.func
+};
 export default connect(mapStateToProps, mapDispatchToProps)(ModalForm);

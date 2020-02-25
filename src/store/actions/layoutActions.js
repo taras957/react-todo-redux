@@ -3,10 +3,8 @@ import {
   SET_TASK,
   REMOVE_FROM_LIST,
   SET_DONE_TASK,
-  REMOVE_FROM_DONE,
-  SORT_BY_NEW_DATE,
-  SORT_BY_OLD_DATE,
-  IS_EDIT
+  SORT_BY_DATE,
+  IS_EDIT,
 } from "./actionTypes";
 
 export function setModal() {
@@ -28,29 +26,20 @@ export function removeFromList(taskID){
         payload: taskID
     }
 }
-export function isDone(taskId){
+export function setDone(taskId){
     return {
         type:SET_DONE_TASK,
         payload: taskId
     }
 }
-export function removeFromDone(taskId){
+
+export function sortByDate(predicate){
     return {
-        type: REMOVE_FROM_DONE,
-        payload: taskId
-    }
+      type: SORT_BY_DATE,
+      payload: predicate
+    };
 }
 
-export function sortByNewDate(){
-    return {
-      type: SORT_BY_NEW_DATE,
-    };
-}
-export function sortByOldDate(){
-    return {
-      type: SORT_BY_OLD_DATE,
-    };
-}
 
 export function isEdit(taskId) {
     return {

@@ -1,10 +1,9 @@
 import React from "react";
 import ReactDom from "react-dom";
-import Layout from './components/layout'
+import Layout from './components/Layout'
 import {createStore,compose} from  'redux'
 import {Provider} from 'react-redux'
 import rootReducer from './store/reducers/rootReducer'
-
 
 
 const composeEnhancers =

@@ -1,26 +1,27 @@
 import React from "react";
-import "./Layout.css";
-import ShowModalBtn from "../pop-up/modalShowBtn";
-import ModalForm from "../pop-up/Modal";
+import "./layout.css";
+import ShowModalBtn from "../Modal/modalShowBtn";
+import ModalForm from "../Modal/Modal";
 import TaskList from "../CurrentTasks";
-import DoneTasksList from "../DoneTasks";
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
+
 import {
   setModal,
-  sortByNewDate,
-  sortByOldDate
+  sortByDate,
 } from "../../store/actions/layoutActions";
+
+
+
 
 function Layout({
   modal,
   setModal,
   taskList,
-  doneTasks,
-  sortByNewDate,
-  sortByOldDate
+  sortByDate,
 }) {
   let filterBtn = false;
-  if ((taskList && taskList.length) || (doneTasks && doneTasks.length)) {
+  if ((taskList && taskList.length)) {
     filterBtn = true;
   }
 
@@ -31,20 +32,27 @@ function Layout({
         {modal ? <ModalForm /> : null}
         {filterBtn ? (
           <>
-            <button onClick={() => sortByNewDate()}>by date new</button>
-            <button onClick={() => sortByOldDate()}>by date old</button>
+            <button
+              className="sortByDate button"
+              onClick={() =>
+                sortByDate('new')
+              }
+            >
+              by date new
+            </button>
+            <button
+              className="sortByDate button"
+              onClick={() =>
+                sortByDate('old')
+              }
+            >
+              by date old
+            </button>
           </>
         ) : null}
       </div>
       <section className="currentTasks">
-        {taskList && taskList.length ? (
-          <TaskList tasks={taskList} />
-        ) : null}
-        {doneTasks && doneTasks.length ? (
-          <>
-            <DoneTasksList doneTasks={doneTasks} />
-          </>
-        ) : null}
+        {taskList && taskList.length ? <TaskList tasks={taskList} /> : null}
       </section>
     </div>
   );
@@ -54,16 +62,23 @@ function mapStateToProps(state) {
   return {
     modal: state.modal,
     taskList: state.taskList,
-    doneTasks: state.doneTasks,
-
-  };
-}
-function mapDispatchToprops(dispatch, props) {
-  return {
-    setModal: () => dispatch(setModal()),
-    sortByNewDate: () => dispatch(sortByNewDate()),
-    sortByOldDate: () => dispatch(sortByOldDate())
   };
 }
 
+
+const  mapDispatchToprops = {
+
+    setModal,
+    sortByDate,
+
+}
+
+
+Layout.propTypes = {
+  taskList: PropTypes.array,
+  modal: PropTypes.bool,
+  setModal: PropTypes.func,
+  sortByDate:PropTypes.func,
+}
 export default connect(mapStateToProps, mapDispatchToprops)(Layout);
+
